@@ -7,13 +7,15 @@
         <meta name="referrer" content="always">
         {{-- <link rel="canonical" href="{{ $page->getUrl() }}"> --}}
 
-        <meta name="description" content="Sistem Informasi Infaq Mesjid Al-Ghufron">
+        <meta name="description" content="Sistem Informasi Infaq Masjid Al-Ghufron">
 
-        <title>Sistem Informasi Infaq Mesjid Al-Ghufron</title>
+        <title>Sistem Informasi Infaq Masjid Al-Ghufron</title>
         
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="icon" href="{{ asset('images/mosque.svg') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <script src="js/app.js"></script>
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/b2ba1193ce.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -30,5 +32,6 @@
                 </main>
             </div>
         </div>
+        @yield('script')
     </body>
 </html>

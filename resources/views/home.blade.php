@@ -1,84 +1,112 @@
 @extends('layouts.app')
 @section('content')
-    <button x-on:click="calculator=!calculator" class="text-white bg-blue-400">
-        Klik
-    </button>
-    <div class="absolute flex items-center justify-center w-full h-full bg-neutral-800/60" x-show="!calculator">
-        <div class="relative w-3/4 px-3 py-2 bg-white rounded-lg md:w-1/3">
-            <span class="flex justify-center my-3 text-xl font-bold text-center">Silahkan Berinfaq</span>
-            <form action="" method="post">
-                <label for="name">
-                    {{-- <span class="text-base font-semibold">Nama Anda (Optional)</span> --}}
-                    <input type="text" name="name" class="w-full rounded" placeholder="Nama Anda (Optional)">
-                </label>
-                <input type="hidden" name="amount" value="0">
-                <div class="flex flex-col my-3">
-                    <div class="flex items-center justify-between w-full px-2 py-3 rounded-lg sm:px-4 bg-slate-200">
-                        <span class="text-2xl font-bold select-none sm:text-4xl">Rp.</span>
-                        <span class="text-2xl font-bold select-none sm:text-4xl amount">0</span>
-                    </div>
-                    <div class="grid grid-cols-3 my-3 gap-x-2 gap-y-3">
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">1</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">2</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">3</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">4</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">5</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">6</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">7</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">8</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">9</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-2 py-4 transition shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-slate-500">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">0</span>
-                        </div>
-                        <div class="flex items-center justify-center col-span-1 py-4 transition bg-red-600 shadow-lg cursor-pointer btn-calc rounded-xl group hover:bg-red-700">
-                            <span class="text-2xl font-bold transition select-none sm:text-4xl group-hover:text-white">C</span>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="w-full px-3 py-2 text-lg font-bold text-white transition rounded-lg bg-slate-600 hover:bg-slate-800">Transfer Infaq</button>
-            </form>
-        </div>
-    </div>
-@endsection
+@include('layouts.header')
+@include('layouts.banner')
+@include('layouts.about')
+@include('layouts.activity')
+@include('layouts.infaq')
+@include('layouts.report')
+@include('layouts.contact')
+@include('layouts.footer')
+@include('components.calculator')
 @section('scripts')
-    <script>
-        $(document).ready(function(){
-            $('.btn-calc').click(function(){
-                var amount = $('input[name="amount"]').val();
-                var value = $(this).find('span').text();
-                if(value == 'C'){
-                    $('input[name="amount"]').val(0);
-                    $('.amount').text(0);
-                }else{
-                    if(amount == 0){
-                        $('input[name="amount"]').val(value);
-                        $('.amount').text(value);
-                    }else{
-                        if(amount.length < 12){
-                            $('input[name="amount"]').val(amount+value);
-                            $('.amount').text((amount+value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
-                        }
+@if (session('success'))
+<div class="flash-data d-none" data-flashdata="{{ session('success') }}"></div>
+<script>
+    var wa = document.querySelector(".flash-data").getAttribute("data-flashdata");
+    Swal.fire({
+        title: 'Pembayaran Infaq Berhasil'
+        , text: "Terimakasih sudah berinfaq semoga menjadi keberkahan dan mendapat balasan-Nya"
+        , icon: 'success'
+    , })
+
+</script>
+@endif
+<script>
+    $(document).ready(function() {
+        $('.btn-calc').click(function() {
+            var jumlah = $('input[name="jumlah"]').val();
+            var value = $(this).find('span').text();
+            if (value == 'C') {
+                $('input[name="jumlah"]').val(0);
+                $('.jumlah').text(0);
+            } else {
+                if (jumlah == 0) {
+                    $('input[name="jumlah"]').val(value);
+                    $('.jumlah').text(value);
+                } else {
+                    if (jumlah.length < 12) {
+                        $('input[name="jumlah"]').val(jumlah + value);
+                        $('.jumlah').text((jumlah + value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
                     }
                 }
-            });
+            }
         });
-    </script>
+    });
+
+</script>
+
+<script>
+    var slider = tns({
+        container: '.activity-slider'
+        , items: 1
+        , controls: true
+        , controlsContainer: '.nav-container'
+        , speed: 400
+        , nav: false
+        , responsive: {
+            640: {
+                items: 1
+            }
+            , 900: {
+                items: 2
+            }
+        }
+    });
+
+</script>
+
+{{-- <script>
+        // How long you want the animation to take, in ms
+        const animationDuration = 2000;
+        // Calculate how long each ‘frame’ should last if we want to update the animation 60 times per second
+        const frameDuration = 1000 / 60;
+        // Use that to calculate how many frames we need to complete the animation
+        const totalFrames = Math.round( animationDuration / frameDuration );
+        // An ease-out function that slows the count as it progresses
+        const easeOutQuad = t => t * ( 2 - t );
+
+        // The animation function, which takes an Element
+        const animateCountUp = el => {
+        let frame = 0;
+        let balance=el.getAttribute("balance");
+        const countTo = parseInt( el.innerHTML, 10 );
+        // Start the animation running 60 times per second
+        const counter = setInterval( () => {
+            frame++;
+            // Calculate our progress as a value between 0 and 1
+            // Pass that value to our easing function to get our
+            // progress on a curve
+            const progress = easeOutQuad( frame / totalFrames );
+            // Use the progress value to calculate the current count
+            const currentCount = Math.round( countTo * progress );
+
+            // If the current count has changed, update the element
+            if ( parseInt( el.innerHTML, 10 ) !== currentCount ) {
+            el.innerHTML = currentCount;
+            }
+
+            // If we’ve reached our last frame, stop the animation
+            if ( frame === totalFrames ) {
+            clearInterval( counter );
+            }
+        }, frameDuration );
+        };
+
+        // Run the animation on all elements with a class of ‘countup’
+        const runAnimations = () => {
+        const countupEls = document.querySelectorAll( '#total' );
+        countupEls.forEach( animateCountUp );
+        };
+    </script> --}}
 @endsection

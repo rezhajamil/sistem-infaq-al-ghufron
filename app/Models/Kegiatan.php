@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TransactionType extends Model
+class Kegiatan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'desc',
+        'nama',
+        'deskripsi',
+        'gambar',
     ];
-
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class, 'type', 'id');
-    }
 }

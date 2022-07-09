@@ -13,14 +13,12 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('kas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('person')->nullable();
-            $table->unsignedBigInteger('type');
-            $table->bigInteger('amount');
-            $table->bigInteger('balance');
-            $table->date('date');
+            $table->string('deskripsi');
+            $table->string('jenis');
+            $table->bigInteger('jumlah');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
