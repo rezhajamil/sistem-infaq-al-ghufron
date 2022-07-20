@@ -1,9 +1,9 @@
-<section id="activity" class="w-full px-8 my-6 bg-slate-600">
-    <span class="inline-block w-full my-6 text-4xl font-bold text-center text-white wow slideInLeft">Kegiatan Masjid Kami</span>
+<section id="activity" class="w-full px-8 my-6 bg-white">
+    <span class="inline-block w-full my-6 text-4xl font-bold text-center text-slate-600 wow slideInLeft">Tentang Masjid Kami</span>
     <div class="w-full py-6 mx-auto md:px-8">
         <div class="flex justify-center activity-slider gap-x-4 h-fit">
             @foreach ($activities as $data)
-            <div class="overflow-hidden bg-white rounded-lg h-fit lg:w-1/2">
+            <div class="h-full my-4 overflow-hidden bg-white rounded-lg shadow-lg">
                 <div class="overflow-hidden max-h-80">
                     <img src="{{ asset('storage/'.$data->gambar) }}" class="object-cover object-center max-w-full max-h-full">
                 </div>
@@ -42,8 +42,8 @@
     </div> --}}
     </div>
     <div class="flex justify-center mt-4 nav-container">
-        <button class="px-3 py-2 mx-3 font-semibold capitalize bg-white rounded text-slate-800"><i class="bi bi-caret-left-fill"></i></button>
-        <button class="px-3 py-2 mx-3 font-semibold capitalize bg-white rounded text-slate-800"><i class="bi bi-caret-right-fill"></i></button>
+        <button class="px-3 py-2 mx-3 font-semibold text-white capitalize rounded bg-slate-600"><i class="bi bi-caret-left-fill"></i></button>
+        <button class="px-3 py-2 mx-3 font-semibold text-white capitalize rounded bg-slate-600"><i class="bi bi-caret-right-fill"></i></button>
     </div>
     </div>
 </section>

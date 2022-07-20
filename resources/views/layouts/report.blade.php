@@ -55,6 +55,42 @@
         </div>
     </div>
 
+    <span class="inline-block w-full mt-12 text-4xl font-bold text-center text-white wow slideInLeft">Daftar Infaq Mesjid Al-Ghufron</span>
+    <div class="flex flex-col mt-4">
+        <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+                <table class="min-w-full overflow-auto max-h-80">
+                    <thead>
+                        <tr>
+                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">No</th>
+                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Tanggal</th>
+                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Nama</th>
+                            <th class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">Jumlah</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="bg-white">
+                        @forelse ($infaq as $key=>$data)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                <div class="text-sm font-medium leading-5 text-gray-900">{{ $key+1 }}</div>
+                            </td>
+
+                            <td class="px-6 py-4 text-sm font-semibold leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">{{ date("d-M-Y",strtotime($data->created_at)) }}</td>
+
+                            <td class="px-6 py-4 text-sm font-semibold leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">{{ $data->nama }}</td>
+
+                            <td class="px-6 py-4 text-sm font-bold leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">{{ $data->jumlah }}</td>
+                        </tr>
+                        @empty
+                        <span class="inline-block mb-3 text-lg font-bold text-center">Tidak Ada Hasil Ditemukan</span>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <span class="inline-block w-full mt-12 text-4xl font-bold text-center text-white wow slideInLeft">Petugas Jumat BKM Al-Ghufron</span>
     <span class="block w-full mt-3 text-2xl font-semibold text-center capitalize text-slate-300 wow slideInLeft">Bulan Ini</span>
     <div class="flex flex-col mt-4">

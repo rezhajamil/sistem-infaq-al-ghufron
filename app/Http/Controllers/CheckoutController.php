@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Checkout;
+use App\Models\Infaq;
 use App\Models\Kas;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -109,7 +110,7 @@ class CheckoutController extends Controller
 
     public function getSnapRedirect(Checkout $checkout)
     {
-        $orderId = 'Infaq - ' . random_int(100000, 999999);
+        $orderId = 'Infaq-' . $checkout->id . '-' . random_int(100000, 999999);
         $jumlah = $checkout->jumlah;
 
         $checkout->midtrans_booking_code = $orderId;
@@ -142,13 +143,15 @@ class CheckoutController extends Controller
 
     public function midtransCallback(Request $request)
     {
-        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Kas::status($request->order_id);
+        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;
 
         $checkout_id = explode('-', $notif->order_id)[1];
         $checkout = Checkout::find($checkout_id);
+
+        // ddd($checkout);
 
         if ($transaction_status == 'capture') {
             if ($fraud == 'challenge') {
@@ -181,21 +184,28 @@ class CheckoutController extends Controller
         }
 
         $checkout->save();
-
-        $last_transaction = Kas::orderBy('tanggal', 'desc')->first();
-        if ($last_transaction) {
-            $last_balance = $last_transaction->balance;
-        } else {
-            $last_balance = 0;
-        }
-
+        $nama = $checkout->nama ? $checkout->nama : 'Hamba Allah';
+        // ddd($nama);
         $transaction = Kas::create([
-            'deskripsi' => "Infaq " + $checkout->nama ?? 'Hamba Allah',
+            'deskripsi' => "Infaq " . $nama,
             'jenis' => "Pemasukan",
             'jumlah' => $checkout->jumlah,
             // 'balance' => $last_balance + $checkout->jumlah,
             'tanggal' => date('Y-m-d'),
         ]);
+
+        $infaq = Infaq::create([
+            'nama' => $nama,
+            'jumlah' => $checkout->jumlah,
+        ]);
+        // ddd($transaction);
+
+        // $last_transaction = Kas::orderBy('tanggal', 'desc')->first();
+        // if ($last_transaction) {
+        //     $last_balance = $last_transaction->balance;
+        // } else {
+        //     $last_balance = 0;
+        // }
 
         return redirect('/')->with('success', 'Payment Berhasil');
     }

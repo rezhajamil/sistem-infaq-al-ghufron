@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Infaq;
 use App\Models\JadwalJumat;
 use App\Models\Kas;
 use App\Models\Kegiatan;
@@ -23,6 +24,7 @@ class HomeController extends Controller
 
         $activities = Kegiatan::all();
         $jumat = JadwalJumat::all();
+        $infaq = Infaq::all();
 
         $transactions = Kas::orderBy("tanggal", "desc")->orderBy("created_at", "desc")->whereMonth("tanggal", "=", $thisMonth)->get();
         $last_month = Kas::orderBy("tanggal", "desc")->orderBy("created_at", "desc")->whereMonth("tanggal", "=", $beforeMonth)->get();
@@ -71,7 +73,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('home', compact('transactions', 'lastMonthBalance', 'activities', 'jumat'));
+        return view('home', compact('transactions', 'lastMonthBalance', 'activities', 'jumat', 'infaq'));
     }
 
     /**

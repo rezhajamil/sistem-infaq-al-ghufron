@@ -2,7 +2,7 @@
 @section('content')
 @include('layouts.header')
 @include('layouts.banner')
-@include('layouts.about')
+{{-- @include('layouts.about') --}}
 @include('layouts.activity')
 @include('layouts.infaq')
 @include('layouts.report')
