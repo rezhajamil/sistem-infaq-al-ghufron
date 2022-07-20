@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InfaqController;
 use App\Http\Controllers\JadwalJumatController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\KegiatanController;
@@ -35,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('transaction', KasController::class);
     Route::resource('activity', KegiatanController::class);
     Route::resource('jumat', JadwalJumatController::class);
+    Route::resource('infaq', InfaqController::class);
 });
 
 require __DIR__ . '/auth.php';

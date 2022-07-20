@@ -14,7 +14,8 @@ class InfaqController extends Controller
      */
     public function index()
     {
-        //
+        $infaq = Infaq::all();
+        return view('infaq.index', compact('infaq'));
     }
 
     /**
