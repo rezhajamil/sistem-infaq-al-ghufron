@@ -60,6 +60,7 @@
 
 <div class="mt-8">
     <a href="{{ route('transaction.create') }}" class="px-4 py-2 font-bold text-white transition bg-indigo-600 rounded-md hover:bg-indigo-800">+ Tambah Transaksi Kas</a>
+    <a href="{{ route('transaction.print') }}" class="px-4 py-2 font-bold text-white transition bg-green-600 rounded-md hover:bg-green-800"><i class="fa-solid fa-print"></i> Print Transaksi Kas</a>
 </div>
 
 <div class="flex flex-col mt-4">

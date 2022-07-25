@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('activity', KegiatanController::class);
     Route::resource('jumat', JadwalJumatController::class);
     Route::resource('infaq', InfaqController::class);
+    Route::get('print/kas', [KasController::class, 'print'])->name('transaction.print');
 });
 
 require __DIR__ . '/auth.php';
